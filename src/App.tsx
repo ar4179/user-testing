@@ -29,15 +29,14 @@ function App() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    let questions = [];
+    const [questions, setQuestions] = useState([{ name: "Aryan" }]);
 
     async function handleSubmitNew(event: any) {
         event.preventDefault();
         const fd = new FormData(event.target);
         let data = Object.fromEntries(fd.entries());
-        let newData = {};
-        newData = { name: data["name"], tasks: [] };
-        questions.push(newData);
+        const newData = { name: data["name"] as string };
+        setQuestions((prev) => [...prev, newData]);
 
         handleClose();
     }
@@ -46,7 +45,7 @@ function App() {
         <div>
             <div className="row">
                 <div className="col-8" id="main-title">
-                    <h1>User Testing Form</h1>
+                    <h1>User Testing</h1>
                 </div>
                 <div className="col-4">
                     <Stack spacing={4} direction="row">
@@ -60,6 +59,9 @@ function App() {
                     </Stack>
                 </div>
             </div>
+            {questions.map((question) => (
+                <h1>{question.name}</h1>
+            ))}
             <Modal
                 open={open}
                 onClose={handleClose}
